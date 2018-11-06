@@ -14,11 +14,12 @@ passport.use(new GoogleStrategy({
         googleId: profile.id
     }).then((existingUser) => {
         if (existingUser) {
-
+            done(null, existingUser);
         } else {
             new User({
-                googleId: profile.id
-            }).save()
+                    googleId: profile.id
+                }).save()
+                .then(user => done(null, user))
         }
     })
 
